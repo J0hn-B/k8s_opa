@@ -59,6 +59,9 @@ jobs:
       - name: Extract the planned values from the tfplan.json in a temporary *.json file.
         run: cat <opa.json | jq '.planned_values.root_module' >planned_values.json
 
+      - name: Show *.json file.
+        run: cat <planned_values.json
+
       - name: Convert to yaml
         run: cat <planned_values.json | yq e -P - | tee policy/planned_values.yml
 
