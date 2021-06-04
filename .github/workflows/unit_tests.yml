@@ -63,7 +63,7 @@ jobs:
         run: cat <planned_values.json
 
       - name: Convert to yaml
-        run: cat <planned_values.json | yq e -P - | tee policy/planned_values.yml
+        run: cat <planned_values.json | yq eval -P - | tee policy/planned_values.yml
 
       - name: Run tests with Conftest
         run: conftest test opa.json  -d policy/planned_values.yml
