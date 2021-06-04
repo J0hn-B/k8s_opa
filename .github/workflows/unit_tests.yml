@@ -48,6 +48,16 @@ jobs:
             sudo mv conftest /usr/local/bin
             rm conftest_0.24.0_Linux_x86_64.tar.gz
           fi
+
+      - name: Install Yq
+        run: |
+          if [ "$(command -v yq)" ]; then
+            echo "--> yq exists, skip install"
+          else
+            wget https://github.com/mikefarah/yq/releases/download/${VERSION}/${BINARY} -O /usr/bin/yq &&
+            chmod +x /usr/bin/yq
+          fi
+
       # - name: Terraform Apply
       #   run: terraform apply -auto-approve
 
