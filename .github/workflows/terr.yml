@@ -5,7 +5,7 @@ on: [push]
 defaults:
   run:
     shell: bash
-    working-directory: azure
+    #working-directory: azure
 
 jobs:
   terraform_validate_apply_destroy:
