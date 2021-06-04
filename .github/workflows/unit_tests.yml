@@ -8,7 +8,7 @@ defaults:
     #working-directory: azure
 
 jobs:
-  terraform_validate_apply_destroy:
+  terraform_unit_tests:
     runs-on: ubuntu-latest
 
     env:
@@ -29,9 +29,25 @@ jobs:
       - name: Terraform Init
         run: terraform init
 
-      - name: Terraform Plan
-        run: terraform plan
+      - name: Terraform Fmt
+        run: terraform fmt
 
+      - name: Terraform Plan
+        run: terraform plan --out opa.test
+
+      - name: Terraform Show
+        run: terraform show -json opa.test >opa.json
+
+      - name: Install Conftest
+        run: |
+          if [ "$(command -v conftest)" ]; then
+            echo "--> Conftest exists, skip install"
+          else
+            wget https://github.com/open-policy-agent/conftest/releases/download/v0.24.0/conftest_0.24.0_Linux_x86_64.tar.gz
+            tar xzf conftest_0.24.0_Linux_x86_64.tar.gz
+            sudo mv conftest /usr/local/bin
+            rm conftest_0.24.0_Linux_x86_64.tar.gz
+          fi
       # - name: Terraform Apply
       #   run: terraform apply -auto-approve
 
