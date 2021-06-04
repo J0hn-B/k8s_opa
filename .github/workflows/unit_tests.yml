@@ -59,10 +59,10 @@ jobs:
           fi
 
       - name: Extract the planned values from the tfplan.json in a temporary *.json file.
-        run: cmd <file | jq '.planned_values.root_module' >planned_values.json
+        run: cmd <opa.json | jq '.planned_values.root_module' >planned_values.json
 
       - name: Convert to yaml
-        run: cmd <file | yq e -P - | tee policy/planned_values.yml
+        run: cmd <planned_values.json | yq e -P - | tee policy/planned_values.yml
 
       # - name: Terraform Apply
       #   run: terraform apply -auto-approve
