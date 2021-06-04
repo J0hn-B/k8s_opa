@@ -60,7 +60,7 @@ jobs:
         run: cat <opa.json | jq '.planned_values.root_module' >planned_values.json
 
       - name: Convert to yaml
-        run: cat <planned_values.json | yq -e -P - | tee policy/planned_values.yml
+        run: cat <planned_values.json | yq -P - | tee policy/planned_values.yml
 
       - name: Run tests with Conftest
         run: conftest test opa.json  -d policy/planned_values.yml
