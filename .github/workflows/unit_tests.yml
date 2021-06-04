@@ -64,12 +64,5 @@ jobs:
       - name: Convert to yaml
         run: cat <planned_values.json | yq e -P - | tee policy/planned_values.yml
 
-      # - name: Terraform Apply
-      #   run: terraform apply -auto-approve
-
-      # - name: Get the output
-      #   run: |
-      #     rgname=$(terraform output -raw rg_name)
-      #     echo $rgname
-      # - name: Terraform Destroy
-      #   run: terraform destroy -auto-approve
+      - name: Run tests with Conftest
+        run: conftest test opa.json  -d policy/planned_values.yml
