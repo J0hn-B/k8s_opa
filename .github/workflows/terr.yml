@@ -1,0 +1,43 @@
+name: Azure Terraform
+
+on: [push]
+
+defaults:
+  run:
+    shell: bash
+    working-directory: azure
+
+jobs:
+  terraform_validate_apply_destroy:
+    runs-on: ubuntu-latest
+
+    env:
+      ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+      ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+      ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 0.14.5
+          terraform_wrapper: false # necessary if you want to have output
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Plan
+        run: terraform plan
+
+      # - name: Terraform Apply
+      #   run: terraform apply -auto-approve
+
+      # - name: Get the output
+      #   run: |
+      #     rgname=$(terraform output -raw rg_name)
+      #     echo $rgname
+      # - name: Terraform Destroy
+      #   run: terraform destroy -auto-approve
