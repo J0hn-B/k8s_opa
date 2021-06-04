@@ -1,78 +1,73 @@
+# Configure Terraform to set the required AzureRM provider
+# version and features{} block.
+
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = ">= 2.46.1"
+    }
+  }
+}
+
+provider "azurerm" {
+  features {}
+}
+
+# Use variables to customise the deployment
+
+variable "root_id" {
+  type    = string
+  default = "myorg-3"
+}
+
+variable "root_name" {
+  type    = string
+  default = "My Organization 3"
+}
+
+# Get the current client configuration from the AzureRM provider.
+# This is used to populate the root_parent_id variable with the
+# current Tenant ID used as the ID for the "Tenant Root Group"
+# Management Group.
+
 data "azurerm_client_config" "current" {}
 
-module "test_root_id_1" {
-  source = "Azure/caf-enterprise-scale/azurerm"
+# Declare the Terraform Module for Cloud Adoption Framework
+# Enterprise-scale and provide a base configuration.
+
+module "enterprise_scale" {
+  source  = "Azure/caf-enterprise-scale/azurerm"
   version = "0.3.2"
 
   root_parent_id = data.azurerm_client_config.current.tenant_id
-  root_id        = var.root_id_1
-  root_name      = "${var.root_name}-1"
-
-}
-
-module "test_root_id_2" {
-  source = "Azure/caf-enterprise-scale/azurerm"
-  version = "0.3.2"
-
-  root_parent_id = data.azurerm_client_config.current.tenant_id
-  root_id        = var.root_id_2
-  root_name      = "${var.root_name}-2"
-
-  deploy_demo_landing_zones = true
-
-}
-
-module "test_root_id_3" {
-  source = "Azure/caf-enterprise-scale/azurerm"
-  version = "0.3.2"
-
-  # Base module configuration settings
-  root_parent_id   = data.azurerm_client_config.current.tenant_id
-  root_id          = var.root_id_3
-  root_name        = "${var.root_name}-3"
-  library_path     = "${path.root}/lib"
-  default_location = var.location
-
-  # Configuration settings for core resources
-  custom_landing_zones       = local.custom_landing_zones
-  archetype_config_overrides = local.archetype_config_overrides
-  subscription_id_overrides  = local.subscription_id_overrides
-
-  # Configuration settings for management resources
-  deploy_management_resources    = true
-  configure_management_resources = local.configure_management_resources
-  subscription_id_management     = data.azurerm_client_config.current.subscription_id
-
-}
-
-module "test_root_id_3_lz1" {
-  source = "Azure/caf-enterprise-scale/azurerm"
-  version = "0.3.2"
-
-  root_parent_id            = "${var.root_id_3}-landing-zones"
-  root_id                   = var.root_id_3
-  deploy_core_landing_zones = false
-  library_path              = "${path.root}/lib"
+  root_id        = var.root_id
+  root_name      = var.root_name
+  library_path   = "${path.root}/lib"
 
   custom_landing_zones = {
-    "${var.root_id_3}-scoped-lz1" = {
-      display_name               = "Scoped LZ1"
-      parent_management_group_id = "${var.root_id_3}-landing-zones"
+    "${var.root_id}-online-example-1" = {
+      display_name               = "${upper(var.root_id)} Online Example 1"
+      parent_management_group_id = "${var.root_id}-landing-zones"
+      subscription_ids           = []
+      archetype_config = {
+        archetype_id   = "customer_online"
+        parameters     = {}
+        access_control = {}
+      }
+    }
+    "${var.root_id}-online-example-2" = {
+      display_name               = "${upper(var.root_id)} Online Example 2"
+      parent_management_group_id = "${var.root_id}-landing-zones"
       subscription_ids           = []
       archetype_config = {
         archetype_id = "customer_online"
         parameters = {
           Deny-Resource-Locations = {
-            listOfAllowedLocations = [
-              "northcentralus",
-              "southcentralus",
-            ]
+            listOfAllowedLocations = ["eastus", ]
           }
           Deny-RSG-Locations = {
-            listOfAllowedLocations = [
-              "northcentralus",
-              "southcentralus",
-            ]
+            listOfAllowedLocations = ["eastus", ]
           }
         }
         access_control = {}
@@ -80,8 +75,35 @@ module "test_root_id_3_lz1" {
     }
   }
 
+}
+
+# Enterprise scale nested landing zone instance
+
+module "enterprise_scale_nested_landing_zone" {
+  source  = "Azure/caf-enterprise-scale/azurerm"
+  version = "0.3.2"
+
+
+  root_parent_id            = "${var.root_id}-landing-zones"
+  root_id                   = var.root_id
+  deploy_core_landing_zones = false
+  library_path              = "${path.root}/lib"
+
+  custom_landing_zones = {
+    "${var.root_id}-module-instance" = {
+      display_name               = "${upper(var.root_id)} Online Example 3 (nested)"
+      parent_management_group_id = "${var.root_id}-landing-zones"
+      subscription_ids           = []
+      archetype_config = {
+        archetype_id   = "customer_online"
+        parameters     = {}
+        access_control = {}
+      }
+    }
+  }
+
   depends_on = [
-    module.test_root_id_3,
+    module.enterprise_scale,
   ]
 
 }
