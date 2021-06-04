@@ -51,19 +51,18 @@ jobs:
 
       - name: Install Yq
         run: |
-          sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys CC86BB64
-          sudo add-apt-repository ppa:rmescandon/yq
-          sudo apt update
-          sudo apt install yq -y
+          if [ "$(command -v yq)" ]; then
+            echo "--> yq exists, skip install"
+          else
+            sudo wget https://github.com/mikefarah/yq/releases/download/v4.9.3/yq_linux_amd64 -O /usr/bin/yq &&
+            sudo chmod +x /usr/bin/yq
+          fi
 
       - name: Extract the planned values from the tfplan.json in a temporary *.json file.
         run: cat <opa.json | jq '.planned_values.root_module' >planned_values.json
 
-      - name: Show *.json file.
-        run: cat <planned_values.json
-
       - name: Convert to yaml
-        run: cat <planned_values.json | yq eval -P - | tee policy/planned_values.yml
+        run: cat <planned_values.json | yq e -P - | tee policy/planned_values.yml
 
       - name: Run tests with Conftest
         run: conftest test opa.json  -d policy/planned_values.yml
