@@ -51,12 +51,10 @@ jobs:
 
       - name: Install Yq
         run: |
-          if [ "$(command -v yq)" ]; then
-            echo "--> yq exists, skip install"
-          else
-            sudo wget https://github.com/mikefarah/yq/releases/download/v4.9.3/yq_linux_amd64 -O /usr/bin/yq &&
-            sudo chmod +x /usr/bin/yq
-          fi
+          sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys CC86BB64
+          sudo add-apt-repository ppa:rmescandon/yq
+          sudo apt update
+          sudo apt install yq -y
 
       - name: Extract the planned values from the tfplan.json in a temporary *.json file.
         run: cat <opa.json | jq '.planned_values.root_module' >planned_values.json
