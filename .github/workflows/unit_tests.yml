@@ -68,4 +68,4 @@ jobs:
         run: conftest test opa.json  -d policy/planned_values.yml
 
       - name: Run warnings with Conftest
-        run: conftest test opa.json  -p opa_warnings/  -d policy/planned_values.yml policy
+        run: conftest test opa.json  -p opa_warnings/  -d policy/planned_values.yml policy/
