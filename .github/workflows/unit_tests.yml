@@ -5,7 +5,7 @@ on: [push]
 defaults:
   run:
     shell: bash
-    #working-directory: azure
+    working-directory: tests/deployment
 
 jobs:
   terraform_unit_tests:
