@@ -12,7 +12,7 @@ echo "==> Downloading archive..."
 wget 'https://github.com/open-policy-agent/conftest/releases/download/v'"$CONFTEST_VERSION"'/conftest_'"$CONFTEST_VERSION"'_Linux_x86_64.tar.gz' -P /tmp
 
 echo "==> Expanding archive..."
-tar xzf 'conftest_'"$CONFTEST_VERSION"'_Linux_x86_64.tar.gz' -C /tmp
+cd /tmp && tar xzf 'conftest_'"$CONFTEST_VERSION"'_Linux_x86_64.tar.gz' -C /tmp
 
 echo "==> Moving binaries..."
 mv /tmp/conftest /usr/local/bin
