@@ -38,34 +38,5 @@ jobs:
       - name: Terraform Show ==> Read and output the Terraform execution plan file in a .json format
         run: terraform show -json opa.test >opa.json
 
-      - name: Install Conftest ==> Run tests against structured configuration data
-        run: |
-          if [ "$(command -v conftest)" ]; then
-            echo "--> Conftest exists, skip install"
-          else
-            wget https://github.com/open-policy-agent/conftest/releases/download/v0.24.0/conftest_0.24.0_Linux_x86_64.tar.gz
-            tar xzf conftest_0.24.0_Linux_x86_64.tar.gz
-            sudo mv conftest /usr/local/bin
-            rm conftest_0.24.0_Linux_x86_64.tar.gz
-          fi
-
-      - name: Install Yq ==> Command-line YAML processor to convert values from json to yml
-        run: |
-          if [ "$(command -v yq)" ]; then
-            echo "--> yq exists, skip install"
-          else
-            sudo wget https://github.com/mikefarah/yq/releases/download/v4.9.3/yq_linux_amd64 -O /usr/bin/yq &&
-            sudo chmod +x /usr/bin/yq
-          fi
-
-      - name: ==> Extract the planned values from the tfplan.json in a temporary *.json file.
-        run: cat <opa.json | jq '.planned_values.root_module' >planned_values.json
-
-      - name: ==> Convert the extracted planned values to yml
-        run: cat <planned_values.json | yq e -P - | tee policy/planned_values.yml
-
-      - name: ==> Visualize some of the tested values with Conftest warnings
-        run: conftest test opa.json  -p opa_warnings/  -d policy/planned_values.yml
-
-      - name: ==> Run tests with Conftest
-        run: conftest test opa.json  -d policy/planned_values.yml
+      - name: Install Conftest on Linux
+        run: cd scripts/ && ./opa-install.sh

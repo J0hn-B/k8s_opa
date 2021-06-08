@@ -30,7 +30,7 @@ else
 fi
 
 # Change to the module root directory
-cd ..
+cd ../tests/deployment
 
 # Initialize Terraform and calculate the changes it will make.
 terraform init
