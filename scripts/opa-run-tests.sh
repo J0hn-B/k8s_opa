@@ -6,7 +6,7 @@ set -e
 # - OPA Run Tests
 #
 # # Parameters
-TF_PLAN_JSON="tfplan-$TF_VERSION-$TF_AZ_VERSION.json"
+TF_PLAN_JSON="opa.json"
 
 echo "==> Switching directories..."
 cd "$PIPELINE_WORKSPACE/s/tests/deployment"
