@@ -42,7 +42,7 @@ else
 fi
 
 echo "==> Change to the module root directory..."
-cd ../tests/deployment
+cd ../deployment
 
 echo "==> Initializing infrastructure..."
 terraform init
@@ -60,7 +60,7 @@ echo "==> Saving planned values to a temporary planned_values.json..."
 cat $PLAN_NAME.json | jq '.planned_values.root_module' >planned_values.json
 
 echo "==> Converting to yaml..."
-cat planned_values.json | yq e -P - | tee ../../opa/policy/planned_values_template.yml
+cat planned_values.json | yq e -P - | tee ../opa/policy/planned_values_template.yml
 
 echo "==> Removing the temporary planned_values.json..."
 rm planned_values.json
