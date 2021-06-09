@@ -76,7 +76,7 @@ Write-Information "==> Saving planned values to a temporary planned_values.json.
 Get-Content -Path .\$PLAN_NAME.json | jq '.planned_values.root_module' | Out-File -FilePath .\planned_values.json
 
 Write-Information "==> Converting to yaml..."
-Get-Content -Path .\planned_values.json | yq e -P - | tee ..\opa\policy\planned_values_template.yml
+Get-Content -Path .\planned_values.json | yq e -P - | Tee-Object ..\opa\policy\planned_values_template.yml
 
 Write-Information "==> Removing the temporary planned_values.json..."
 Remove-Item -Path .\planned_values.json
