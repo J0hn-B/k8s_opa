@@ -88,5 +88,5 @@ else
     echo
     echo "Exposing $PLAN_NAME.json in a repository can cause security breach"
     echo
-    echo "From within your root module: conftest test $PLAN_NAME.json  -d policy/planned_values.yml\n"
+    echo "From within your terraform root module: conftest test $PLAN_NAME.json -p ../opa/policy/  -d ../opa/policy/planned_values_template.yml"
 fi

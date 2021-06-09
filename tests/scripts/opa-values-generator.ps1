@@ -89,6 +89,6 @@ if ($CONFIRM -eq 'y') {
 else {
     Write-Warning -Message "$PLAN_NAME.json  can contain sensitive data" 
     Write-Warning -Message  "Exposing $PLAN_NAME.json in a repository can cause security breach" 
-    Write-Host "From within your root module:" -NoNewline
-    Write-Host " conftest test $PLAN_NAME.json  -d policy/planned_values.yml" -ForegroundColor Green
+    Write-Host "From within your terraform root module:" -NoNewline
+    Write-Host " conftest test $PLAN_NAME.json -p ../opa/policy/  -d ../opa/policy/planned_values_template.yml" -ForegroundColor Green
 }
