@@ -39,7 +39,7 @@ jobs:
         run: terraform show -json opa.test >opa.json
 
       - name: Install Conftest on Linux
-        run: cd ../../scripts/ && sudo chmod +x *.sh && sudo ./opa-install.sh
+        run: cd ../scripts/ && sudo chmod +x *.sh && sudo ./opa-install.sh
 
       - name: Test Conftest on Linux
         run: conftest
