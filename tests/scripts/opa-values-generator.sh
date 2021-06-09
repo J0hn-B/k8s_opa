@@ -41,6 +41,16 @@ else
         chmod +x /usr/bin/yq
 fi
 
+if [ $(command -v conftest) ]; then
+    echo "--> Conftest exists, skip install"
+    conftest --version
+else
+    wget https://github.com/open-policy-agent/conftest/releases/download/v0.24.0/conftest_0.24.0_Linux_x86_64.tar.gz
+    tar xzf conftest_0.24.0_Linux_x86_64.tar.gz
+    sudo mv conftest /usr/local/bin
+    rm conftest_0.24.0_Linux_x86_64.tar.gz
+fi
+
 echo "==> Change to the module root directory..."
 cd ../deployment
 
@@ -65,7 +75,7 @@ cat planned_values.json | yq e -P - | tee ../opa/policy/planned_values_template.
 echo "==> Removing the temporary planned_values.json..."
 rm planned_values.json
 
-echo "==> Remove terraform-plan.json?"
+echo
 read -p "Do you want to remove terraform-plan.json (y/n)?" CONT
 if [ "$CONT" = "y" ]; then
     rm $PLAN_NAME.json
@@ -77,4 +87,6 @@ else
     echo "$PLAN_NAME.json  can contain sensitive data"
     echo
     echo "Exposing $PLAN_NAME.json in a repository can cause security breach"
+    echo
+    echo "From within your root module: conftest test $PLAN_NAME.json  -d policy/planned_values.yml\n"
 fi
