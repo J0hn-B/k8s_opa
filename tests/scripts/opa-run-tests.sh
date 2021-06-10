@@ -23,8 +23,7 @@ cd ../opa/policy &&
         -e's:root-id-2:'"${root_id_2}"':g' \
         -e 's:root-id-3:'"${root_id_3}"':g' \
         -e 's:root-name:'"${root_name}"':g' \
-        -e's:eastus:'"${location}"':g' |
-        tee planned_values.yml
+        -e's:eastus:'"${location}"':g' >planned_values.yml
 
 echo "==> Running conftest..."
 cd ../../deployment &&
