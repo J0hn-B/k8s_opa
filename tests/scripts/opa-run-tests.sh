@@ -17,7 +17,7 @@ echo "==> Switching directories..."
 cd ../deployment
 
 echo "==> Convert plan to JSON..."
-terraform show -json "$TF_PLAN_JSON"
+terraform show -json "$TF_PLAN_JSON" >$PLAN_NAME.json # verify if saving to json is needed
 
 echo "==> Switching directories..."
 cd ../opa/policy
