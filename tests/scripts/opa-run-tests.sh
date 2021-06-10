@@ -6,7 +6,7 @@ set -e
 # - OPA Run Tests
 #
 # # Parameters
-TF_PLAN_JSON=opa.json
+TF_PLAN_JSON=opa.test
 
 echo "==> Switching directories..."
 cd ../deployment

@@ -35,9 +35,6 @@ jobs:
       - name: Terraform Plan ==> Generate a Terraform execution plan
         run: terraform plan --out opa.test
 
-      - name: Terraform Show ==> Read and output the Terraform execution plan file in a .json format
-        run: terraform show -json opa.test >opa.json
-
       - name: Install Conftest on Linux
         run: cd ../scripts/ && sudo chmod +x *.sh && sudo ./opa-install.sh
 
