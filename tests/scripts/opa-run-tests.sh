@@ -31,6 +31,9 @@ cat planned_values_template.yml |
         -e's:eastus:'"${location}"':g' >planned_values.yml |
     tee planned_values.yml
 
+echo "==> Switching directories..."
+cd ../../deployment
+
 echo "==> Running conftest..."
 conftest test "$TF_PLAN_JSON.json" \
     -p ../opa/policy \
