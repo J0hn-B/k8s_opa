@@ -43,3 +43,6 @@ jobs:
 
       - name: Test Conftest on Linux
         run: conftest
+
+      - name: Opa run tests with Conftest
+        run: cd ../scripts/ && sudo chmod +x *.sh && sudo ./opa-run-tests.sh

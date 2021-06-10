@@ -9,7 +9,7 @@ set -e
 TF_PLAN_JSON=opa.json
 
 echo "==> Switching directories..."
-cd /tests/deployment
+cd ../deployment
 
 echo "==> Convert plan to JSON..."
 terraform show -json "$TF_PLAN_JSON"
