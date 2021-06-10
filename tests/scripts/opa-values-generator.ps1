@@ -64,7 +64,13 @@ Write-Information "==> Initializing infrastructure..."
 terraform init
 
 Write-Information "==> Planning infrastructure..."
-terraform plan --out $PLAN_NAME
+terraform plan `
+    -var="root_id_1=root-id-1" `
+    -var="root_id_2=root-id-2" `
+    -var="root_id_3=root-id-3" `
+    -var="root_name=root-name" `
+    -var="location=eastus" `
+    -out=$PLAN_NAME
 
 Write-Information "==> Converting plan to *.json..."
 terraform show -json $PLAN_NAME | Out-File -FilePath .\$PLAN_NAME.json
