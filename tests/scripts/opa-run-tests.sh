@@ -27,7 +27,7 @@ cat planned_values_template.yml |
     tee planned_values.yml
 
 echo "==> Running conftest..."
-conftest test "$TF_PLAN_JSON" \
+conftest test "$TF_PLAN_JSON.json" \
     -p ../opa/policy \
     -d ../opa/policy/planned_values.yml
 
