@@ -6,7 +6,12 @@ set -e
 # - OPA Run Tests
 #
 # # Parameters
-TF_PLAN_JSON=opa.test
+root_id_1="tv-myorg-1"
+root_id_2="myorg-2"
+root_id_3="myorg-3"
+root_name="My Organization"
+location="uksouth"
+TF_PLAN_JSON=opa
 
 echo "==> Switching directories..."
 cd ../deployment
