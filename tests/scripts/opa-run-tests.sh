@@ -11,32 +11,25 @@ root_id_2="myorg-2"
 root_id_3="myorg-3"
 root_name="My Organization"
 location="uksouth"
-TF_PLAN_JSON=opa
-
-echo "==> Switching directories..."
-cd ../deployment
+TF_PLAN_NAME=opa
 
 echo "==> Convert plan to JSON..."
-terraform show -json "$TF_PLAN_JSON" >$PLAN_NAME.json # verify if saving to json is needed
-
-echo "==> Switching directories..."
-cd ../opa/policy
+cd ../deployment && terraform show -json "$TF_PLAN_NAME" >$TF_PLAN_NAME.json # verify if saving to json is needed in pipelines
 
 echo "==> Load planned values..."
-cat planned_values_template.yml |
+cd ../opa/policy &&
+    cat planned_values_template.yml |
     sed -e 's:root-id-1:'"${root_id_1}"':g' \
         -e's:root-id-2:'"${root_id_2}"':g' \
         -e 's:root-id-3:'"${root_id_3}"':g' \
         -e 's:root-name:'"${root_name}"':g' \
         -e's:eastus:'"${location}"':g' >planned_values.yml |
-    tee planned_values.yml
-
-echo "==> Switching directories..."
-cd ../../deployment
+        tee planned_values.yml
 
 echo "==> Running conftest..."
-conftest test "$TF_PLAN_JSON.json" \
-    -p ../opa/policy \
-    -d ../opa/policy/planned_values.yml
+cd ../../deployment &&
+    conftest test "$TF_PLAN_NAME.json" \
+        -p ../opa/policy \
+        -d ../opa/policy/planned_values.yml
 
 #echo "==> Saving test results..."
