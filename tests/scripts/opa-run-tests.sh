@@ -6,7 +6,7 @@ set -e
 # - OPA Run Tests
 #
 # # Parameters
-TF_PLAN_JSON=terraform-plan.json
+TF_PLAN_JSON=opa.json
 
 echo "==> Switching directories..."
 cd /tests/deployment
