@@ -1,20 +1,20 @@
-name: Test with K3d
+# name: Test with K3d
 
-on: [push]
+# on: [push]
 
-jobs:
-  dev_env:
-    runs-on: ubuntu-latest # [self-hosted, linux, x64]
-    #timeout-minutes: 5
-    steps:
-      - uses: actions/checkout@v2
+# jobs:
+#   dev_env:
+#     runs-on: ubuntu-latest # [self-hosted, linux, x64]
+#     #timeout-minutes: 5
+#     steps:
+#       - uses: actions/checkout@v2
 
-      - name: Make scripts executable
-        run: find linux/ -type f -iname "*.sh" -exec chmod +x {} \;
+#       - name: Make scripts executable
+#         run: find linux/ -type f -iname "*.sh" -exec chmod +x {} \;
 
-      - name: Prerare the K3d development environment
-        run: linux/k3d_cluster.sh
-        shell: bash
+#       - name: Prerare the K3d development environment
+#         run: linux/k3d_cluster.sh
+#         shell: bash
 
       # # - name: Install Helm charts
       # #   run: scripts/helm_charts.sh
