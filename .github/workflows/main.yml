@@ -44,3 +44,4 @@ jobs:
       - name: Verify cluster
         run: |
           kubectl cluster-info
+          kubectl get nodes
