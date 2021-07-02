@@ -1,5 +1,5 @@
 ---
-name: Deploy Linux scripts
+name: Gitops K8s
 
 # Documentation:
 # https://help.github.com/en/articles/workflow-syntax-for-github-actions
@@ -13,8 +13,8 @@ on:
 # # # ? Set the Job 
 
 jobs:
-  lint_code:
-    name: Lint Code Base
+  build:
+    name: Prepare and test on a k3d cluster
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
@@ -30,6 +30,10 @@ jobs:
           VALIDATE_ALL_CODEBASE: true
           DEFAULT_BRANCH: main
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+# # # ? Update scripts permissions
+      - name: Make scripts executable
+        run: find linux/ -type f -iname "*.sh" -exec chmod +x {} \;
 
 # # # ? Create a k3d cluster 
       - name: Deploy linux scripts
