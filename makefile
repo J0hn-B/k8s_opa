@@ -17,7 +17,7 @@ prepare_cluster:
 	./linux/k3d_prepare.sh
 install_argocd:
 	@echo "==> Install Argo CD..."
-	./argocd/argocd_install.sh	
+	./argocd/argocd_install.sh
 
 
 # # # Clean up

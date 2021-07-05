@@ -49,5 +49,4 @@ else
     echo -e "==>  Cluster does not exist"
     wget -q -O - https://raw.githubusercontent.com/rancher/k3d/main/install.sh | bash
     k3d cluster create dev-cluster --agents 2
-    k3d kubeconfig merge dev-cluster
 fi
