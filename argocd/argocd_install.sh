@@ -5,7 +5,7 @@ GREEN='\033[0;32m'
 NC='\033[0m'
 
 # Parameters
-ARGOCD_CLI_VERSION=$(argocd version)
+ARGOCD_CLI_VERSION=$(argocd version --client)
 
 # Install Argo CD CLI
 if [ "$ARGOCD_CLI_VERSION" ]; then
@@ -27,21 +27,12 @@ ARGO_PASSWORD=$(kubectl -n argocd get secret argocd-initial-admin-secret -o json
 echo -e "${GREEN}==> Argo CD password:${NC} $ARGO_PASSWORD"
 echo
 
+echo -e "==> Installing Argo CD applications..."
+kubectl apply -f argocd/applications/opa.yml
+echo
+
 # # # Keep port-forward connection alive
 while true; do
     kubectl port-forward svc/argocd-server -n argocd 8080:443
     sleep 3
 done
-
-### Login to argocd CLI
-#
-# argocd login --insecure localhost:8080
-#
-# argocd cluster add k3d-dev-cluster
-#
-#  argocd app list
-#
-# argocd app manifests opa
-#
-#
-#
