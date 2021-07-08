@@ -28,11 +28,5 @@ echo -e "${GREEN}==> Argo CD password:${NC} $ARGO_PASSWORD"
 echo
 
 echo -e "==> Installing Argo CD applications..."
-kubectl apply -f argocd/applications/opa.yml
+kubectl apply -f argocd/applications/*.yml
 echo
-
-# # # Keep port-forward connection alive
-while true; do
-    kubectl port-forward svc/argocd-server -n argocd 8080:443
-    sleep 3
-done
