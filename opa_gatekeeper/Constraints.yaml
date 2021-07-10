@@ -3,10 +3,11 @@ kind: K8sRequiredLabels
 metadata:
   name: namespace-must-have-label
 spec:
+  enforcementAction: warn       #? test constraints without enforcing them
   match:
     kinds:
       - apiGroups: [""]
         kinds: ["Namespace"]
-    namespaces: ["default"]  #! apply to resources in a listed namespace 
+    namespaces: ["default"]     #? apply to resources in a listed namespace 
   parameters:
     labels: ["gatekeeper"]
