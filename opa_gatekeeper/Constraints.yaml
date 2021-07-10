@@ -7,5 +7,6 @@ spec:
     kinds:
       - apiGroups: [""]
         kinds: ["Namespace"]
+    namespaces: ["default"]  #! apply to resources in a listed namespace 
   parameters:
     labels: ["gatekeeper"]
