@@ -21,5 +21,4 @@ spec:
     server: 'https://kubernetes.default.svc'
     namespace: opa
   syncPolicy:
-    syncOptions:
-      - ApplyOutOfSyncOnly=true
+    automated: {}
