@@ -4,7 +4,7 @@ metadata:
   name: opa-constraint-templates
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "2"
+    argocd.argoproj.io/sync-wave: "1"
 spec:
   # The project the application belongs to.
   project: default
