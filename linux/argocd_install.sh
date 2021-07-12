@@ -29,7 +29,3 @@ echo
 
 echo -e "==> Installing Argo CD applications..."
 kubectl apply -f argocd/applications/
-sleep 10
-kubectl wait --for=condition=Available --timeout=360s deploy/gatekeeper-audit -n opa
-kubectl wait --for=condition=Available --timeout=360s deploy/gatekeeper-controller-manager -n opa
-echo
