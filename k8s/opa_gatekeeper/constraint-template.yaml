@@ -3,7 +3,7 @@ kind: ConstraintTemplate
 metadata:
   name: k8srequiredlabels
   annotations:
-    argocd.argoproj.io/hook: PreSync
+    argocd.argoproj.io/hook: Sync
 spec:
   crd:
     spec:
