@@ -3,7 +3,7 @@ kind: K8sRequiredLabels
 metadata:
   name: namespace-must-have-label
   annotations:
-    argocd.argoproj.io/sync-wave: "1"
+    argocd.argoproj.io/hook: PreSync
 spec:
   enforcementAction: warn       #? test constraints without enforcing them
   match:
