@@ -28,7 +28,7 @@ echo -e "${GREEN}==> Argo CD password:${NC} $ARGO_PASSWORD"
 echo
 
 echo -e "==> Installing Argo CD applications..."
-kubectl apply -f argocd/applications/*.yml
+kubectl apply -f argocd/applications/
 sleep 10
 kubectl wait --for=condition=Available --timeout=360s deploy/gatekeeper-audit -n opa
 kubectl wait --for=condition=Available --timeout=360s deploy/gatekeeper-controller-manager -n opa
