@@ -3,7 +3,7 @@ kind: ConstraintTemplate
 metadata:
   name: k8srequiredlabels
   annotations:
-    argocd.argoproj.io/hook: SyncFail
+    argocd.argoproj.io/sync-wave: "2"
 spec:
   crd:
     spec:
