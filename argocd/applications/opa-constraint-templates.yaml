@@ -1,10 +1,10 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: open-policy-agent-policies
+  name: opa-constraint-templates
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "1"
+    argocd.argoproj.io/sync-wave: "2"
 spec:
   # The project the application belongs to.
   project: default
@@ -12,14 +12,14 @@ spec:
   # Source of the application manifests
   source:
     repoURL: 'https://github.com/J0hn-B/opa'
-    path: k8s/opa_gatekeeper
+    path: k8s/opa_gatekeeper/constraint-templates
     targetRevision: HEAD
     directory:
       recurse: true
       jsonnet: {}
   destination:
     server: 'https://kubernetes.default.svc'
-    namespace: default
+    namespace: opa
   syncPolicy:
     syncOptions:
       - ApplyOutOfSyncOnly=true
