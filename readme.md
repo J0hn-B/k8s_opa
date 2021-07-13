@@ -47,3 +47,7 @@ In `Management` ==> `Kibana` ==> `Index patterns`, create the index pattern usin
 Check `Logs` and `Metrics` for available data, add filters to `Discover` for data filtering.
 
 Open Policy Agent policies located at `k8s/opa_gatekeeper/` directory.
+
+### Cleanup
+
+`make clean`
