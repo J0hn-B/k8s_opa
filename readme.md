@@ -1,6 +1,6 @@
 # GitOps - Deploy Open Policy Agent
 
-### How to
+## How to
 
 Deploy:
 
