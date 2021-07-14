@@ -6,7 +6,7 @@ Deploy:
 
 [Create a repository from a template](https://docs.github.com/en/github/creating-cloning-and-archiving-repositories/creating-a-repository-on-github/creating-a-repository-from-a-template#creating-a-repository-from-a-template)
 
-`cd ~/opa`
+`cd ~/your_repo_here`
 
 `make`
 
@@ -18,11 +18,13 @@ Deploy:
 
 Gitops template for Open Policy Agent policies development.
 
-Build a local K8s cluster, using k3d.
+- Create a local K8s cluster, using k3d.
 
-Install ArgoCD and ELK stack for gitops and monitoring.
+  - Install ArgoCD.
 
-Install Open Policy Agent Gatekeeper and deploy the first policy.
+    - Install ELK stack for monitoring
+
+    - Install Open Policy Agent Gatekeeper and deploy the first policy.
 
 Running `make` will:
 
