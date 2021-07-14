@@ -8,10 +8,9 @@ metadata:
 spec:
   # The project the application belongs to.
   project: default
-
   # Source of the application manifests
   source:
-    repoURL: 'https://github.com/J0hn-B/opa' #TODO: Replace with yq
+    repoURL: 'https://github.com/J0hn-B/opa'
     path: k8s/opa_gatekeeper/constraint-templates
     targetRevision: HEAD
     directory:

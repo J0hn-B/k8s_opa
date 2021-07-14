@@ -8,17 +8,18 @@ NC='\033[0m'
 CLUSTER=$(k3d cluster list | grep dev-cluster)
 KUBECTL_VERSION=$(kubectl version --short)
 HELM_VERSION=$(helm version --short)
-TERRAFORM_VERSION=$(terraform version)
+YQ_VERSION=$(yq --version)
+YQ_DOWNLOAD_VERSION="v4.9.8"
+YQ_DOWNLOAD_BINARY="yq_linux_amd64"
+REPO=$(git config --local remote.origin.url)
 
-# Install Terraform
-if [ "$TERRAFORM_VERSION" ]; then
-    echo -e "${GREEN}==> Terraform:${NC} $TERRAFORM_VERSION"
+# Install Yq
+if [ "$YQ_VERSION" ]; then
+    echo -e "${GREEN}==> Yq:${NC} $YQ_VERSION"
 else
-    echo -e "==> Installing Terraform..."
-    sudo apt-get update && sudo apt-get install -y gnupg software-properties-common curl
-    curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
-    sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
-    sudo apt-get update && sudo apt-get install terraform
+    echo -e "==> Installing Yq..."
+    sudo wget https://github.com/mikefarah/yq/releases/download/${YQ_DOWNLOAD_VERSION}/${YQ_DOWNLOAD_BINARY}.tar.gz -O - |
+        tar xz && sudo mv ${YQ_DOWNLOAD_BINARY} /usr/bin/yq
 fi
 
 # Install Kubectl
@@ -50,3 +51,32 @@ else
     wget -q -O - https://raw.githubusercontent.com/rancher/k3d/main/install.sh | bash
     k3d cluster create dev-cluster --agents 2
 fi
+
+echo
+# update opa-constraint-templates.yaml repoURL
+OPA_CONSTRAINT_TEMPLATES=$(repo=${REPO%.*} yq e '.spec.source.repoURL == env(repo)' argocd/applications/opa-constraint-templates.yaml)
+
+if [ -f "argocd/applications/opa-constraint-templates.yaml" ]; then
+    if [ "$OPA_CONSTRAINT_TEMPLATES" = true ]; then
+        echo -e "The opa-constraint-templates.yaml repoURL in ${GREEN}argocd/applications/opa-constraint-templates.yaml${NC} is up to date: ${GREEN}${REPO%.*}${NC}"
+    else
+        repo=${REPO%.*} yq e '.spec.source.repoURL = env(repo)' -i argocd/applications/opa-constraint-templates.yaml
+        echo -e "${GREEN}Updating the opa-constraint-templates.yaml repoURL with your git repo url:${NC} $REPO"
+    fi
+fi
+
+echo
+# update opa-constraints.yaml repoURL
+
+OPA_CONSTRAINTS=$(repo=${REPO%.*} yq e '.spec.source.repoURL == env(repo)' argocd/applications/opa-constraints.yaml)
+
+if [ -f "argocd/applications/opa-constraints.yaml" ]; then
+    if [ "$OPA_CONSTRAINTS" = true ]; then
+        echo -e "The opa-constraints.yaml repoURL in ${GREEN}argocd/applications/opa-constraints.yaml${NC} is up to date: ${GREEN}${REPO%.*}${NC}"
+    else
+        repo=${REPO%.*} yq e '.spec.source.repoURL = env(repo)' -i argocd/applications/opa-constraint-templates.yaml
+        echo -e "${GREEN}Updating the opa-constraints.yaml repoURL with your git repo url:${NC} $REPO"
+    fi
+fi
+
+echo
