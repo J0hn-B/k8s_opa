@@ -4,14 +4,7 @@
 GREEN='\033[0;32m'
 NC='\033[0m'
 
-# Parameters
-CLUSTER=$(k3d cluster list | grep dev-cluster)
-KUBECTL_VERSION=$(kubectl version --short)
-HELM_VERSION=$(helm version --short)
-YQ_VERSION=$(yq --version)
-YQ_DOWNLOAD_VERSION="v4.9.8"
-YQ_DOWNLOAD_BINARY="yq_linux_amd64"
-REPO=$(git config --local remote.origin.url)
+source linux/./parameters.sh
 
 # Install Yq
 if [ "$YQ_VERSION" ]; then
@@ -49,7 +42,7 @@ if [ "$CLUSTER" ]; then
 else
     echo -e "==>  Cluster does not exist"
     wget -q -O - https://raw.githubusercontent.com/rancher/k3d/main/install.sh | bash
-    k3d cluster create dev-cluster --agents 2
+    k3d cluster create $CLUSTER_NAME --agents 2
 fi
 
 echo
