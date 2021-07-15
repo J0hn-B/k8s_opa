@@ -4,7 +4,7 @@
 GREEN='\033[0;32m'
 NC='\033[0m'
 
-source linux/./parameters.sh
+source linux/./parameters.sh # # # paths adjusted for "make"
 
 # Install Yq
 if [ "$YQ_VERSION" ]; then
@@ -46,7 +46,8 @@ else
 fi
 
 echo
-# update opa-constraint-templates.yaml repoURL
+
+# Update opa-constraint-templates.yaml repoURL
 OPA_CONSTRAINT_TEMPLATES=$(repo=${REPO%.*} yq e '.spec.source.repoURL == env(repo)' argocd/applications/opa-constraint-templates.yaml)
 
 if [ -f "argocd/applications/opa-constraint-templates.yaml" ]; then
@@ -59,7 +60,8 @@ if [ -f "argocd/applications/opa-constraint-templates.yaml" ]; then
 fi
 
 echo
-# update opa-constraints.yaml repoURL
+
+# Update opa-constraints.yaml repoURL
 
 OPA_CONSTRAINTS=$(repo=${REPO%.*} yq e '.spec.source.repoURL == env(repo)' argocd/applications/opa-constraints.yaml)
 
