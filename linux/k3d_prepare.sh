@@ -74,7 +74,7 @@ if [ -f "argocd/applications/opa-constraints.yaml" ]; then
     if [ "$OPA_CONSTRAINTS" = true ]; then
         echo -e "The opa-constraints.yaml repoURL in ${GREEN}argocd/applications/opa-constraints.yaml${NC} is up to date: ${GREEN}${REPO%.*}${NC}"
     else
-        repo=${REPO%.*} yq e '.spec.source.repoURL = env(repo)' -i argocd/applications/opa-constraint-templates.yaml
+        repo=${REPO%.*} yq e '.spec.source.repoURL = env(repo)' -i argocd/applications/opa-constraints.yaml
         echo -e "${GREEN}Updating the opa-constraints.yaml repoURL with your git repo url:${NC} $REPO"
     fi
 fi
