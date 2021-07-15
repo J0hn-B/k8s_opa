@@ -37,7 +37,7 @@ jobs:
         run: find linux/ -type f -iname "*.sh" -exec chmod +x {} \;
 
 # # # ? Create a k3d cluster 
-      - name: Deploy linux scripts
+      - name: Run k3d_prepare.sh
         run: linux/k3d_prepare.sh
         shell: bash  
 
