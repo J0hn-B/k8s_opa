@@ -28,4 +28,4 @@ echo -e "${GREEN}==> Argo CD password:${NC} $ARGO_PASSWORD"
 echo
 
 echo -e "==> Installing Argo CD applications..."
-kubectl apply -f argocd/applications/
+kubectl apply -f k8s/argocd/applications/

@@ -48,13 +48,13 @@ fi
 echo
 
 # Update opa-constraint-templates.yaml repoURL
-OPA_CONSTRAINT_TEMPLATES=$(repo=${REPO%.*} yq e '.spec.source.repoURL == env(repo)' argocd/applications/opa-constraint-templates.yaml)
+OPA_CONSTRAINT_TEMPLATES=$(repo=${REPO%.*} yq e '.spec.source.repoURL == env(repo)' k8s/argocd/applications/opa-constraint-templates.yaml)
 
-if [ -f "argocd/applications/opa-constraint-templates.yaml" ]; then
+if [ -f "k8s/argocd/applications/opa-constraint-templates.yaml" ]; then
     if [ "$OPA_CONSTRAINT_TEMPLATES" = true ]; then
-        echo -e "The opa-constraint-templates.yaml repoURL in ${GREEN}argocd/applications/opa-constraint-templates.yaml${NC} is up to date: ${GREEN}${REPO%.*}${NC}"
+        echo -e "The opa-constraint-templates.yaml repoURL in ${GREEN}k8s/argocd/applications/opa-constraint-templates.yaml${NC} is up to date: ${GREEN}${REPO%.*}${NC}"
     else
-        repo=${REPO%.*} yq e '.spec.source.repoURL = env(repo)' -i argocd/applications/opa-constraint-templates.yaml
+        repo=${REPO%.*} yq e '.spec.source.repoURL = env(repo)' -i k8s/argocd/applications/opa-constraint-templates.yaml
         echo -e "${GREEN}Updating the opa-constraint-templates.yaml repoURL with your git repo url:${NC} $REPO"
     fi
 fi
@@ -63,13 +63,13 @@ echo
 
 # Update opa-constraints.yaml repoURL
 
-OPA_CONSTRAINTS=$(repo=${REPO%.*} yq e '.spec.source.repoURL == env(repo)' argocd/applications/opa-constraints.yaml)
+OPA_CONSTRAINTS=$(repo=${REPO%.*} yq e '.spec.source.repoURL == env(repo)' k8s/argocd/applications/opa-constraints.yaml)
 
-if [ -f "argocd/applications/opa-constraints.yaml" ]; then
+if [ -f "k8s/argocd/applications/opa-constraints.yaml" ]; then
     if [ "$OPA_CONSTRAINTS" = true ]; then
-        echo -e "The opa-constraints.yaml repoURL in ${GREEN}argocd/applications/opa-constraints.yaml${NC} is up to date: ${GREEN}${REPO%.*}${NC}"
+        echo -e "The opa-constraints.yaml repoURL in ${GREEN}k8s/argocd/applications/opa-constraints.yaml${NC} is up to date: ${GREEN}${REPO%.*}${NC}"
     else
-        repo=${REPO%.*} yq e '.spec.source.repoURL = env(repo)' -i argocd/applications/opa-constraints.yaml
+        repo=${REPO%.*} yq e '.spec.source.repoURL = env(repo)' -i k8s/argocd/applications/opa-constraints.yaml
         echo -e "${GREEN}Updating the opa-constraints.yaml repoURL with your git repo url:${NC} $REPO"
     fi
 fi

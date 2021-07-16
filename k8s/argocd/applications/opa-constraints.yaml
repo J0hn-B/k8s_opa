@@ -10,7 +10,7 @@ spec:
   project: default
   # Source of the application manifests
   source:
-    repoURL: 'https://github.com/J0hn-B/opa'
+    repoURL: 'https://github.com/J0hn-B/k8s_opa'
     path: k8s/opa_gatekeeper/constraints
     targetRevision: HEAD
     directory:

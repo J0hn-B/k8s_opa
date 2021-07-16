@@ -2,6 +2,8 @@
 
 ## How to
 
+> If you cant see "Use this template" button, login with your github account
+
 Deploy:
 
 [Create a repository from a template](https://docs.github.com/en/github/creating-cloning-and-archiving-repositories/creating-a-repository-on-github/creating-a-repository-from-a-template#creating-a-repository-from-a-template)
@@ -30,6 +32,8 @@ This template will:
 
     - Install Open Policy Agent Gatekeeper and deploy the first policy.
 
+![image](https://user-images.githubusercontent.com/40946247/125950496-0d9f804b-00cb-49df-8314-ca9cd52d7d97.png)
+
 `make` targets step by step:
 
 1. **validate_code:** Run `github-linter` locally and validate code (docker container)
@@ -40,11 +44,11 @@ This template will:
 
 4. **port_forward_argocd:** Access argocd in `localhost:8080`
 
-Check CLI output for ArgoCD UI password.
-
-After deployment you will have a 2 node K3d cluster with an active ArgoCD installation, Open Policy Agent and an ELK stack for logs and metrics.
+After deployment you will have a 3 node K3d cluster with an active ArgoCD installation, Open Policy Agent Gatekeeper and ELK stack for logs and metrics.
 
 **To access ArgoCD:**
+
+- Check CLI output for ArgoCD UI password.
 
 - In your browser ==> `localhost:8080`
 
