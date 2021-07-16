@@ -6,6 +6,8 @@ Deploy:
 
 [Create a repository from a template](https://docs.github.com/en/github/creating-cloning-and-archiving-repositories/creating-a-repository-on-github/creating-a-repository-from-a-template#creating-a-repository-from-a-template)
 
+`git clone your_repo_here`
+
 `cd ~/your_repo_here`
 
 `make`
@@ -18,6 +20,8 @@ Deploy:
 
 Gitops template for Open Policy Agent policies development.
 
+This template will:
+
 - Create a local K8s cluster, using k3d.
 
   - Install ArgoCD.
@@ -26,7 +30,7 @@ Gitops template for Open Policy Agent policies development.
 
     - Install Open Policy Agent Gatekeeper and deploy the first policy.
 
-Running `make` will:
+`make` targets step by step:
 
 1. **validate_code:** Run `github-linter` locally and validate code (docker container)
 
