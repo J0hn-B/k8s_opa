@@ -44,7 +44,7 @@ This template will:
 
 4. **port_forward_argocd:** Access argocd in `localhost:8080`
 
-After deployment you will have a 3 node K3d cluster with an active ArgoCD installation, Open Policy Agent Gatekeeper and ELK stack for logs and metrics.
+After deployment you will have a K3d cluster with an active ArgoCD installation, Open Policy Agent Gatekeeper and ELK stack for logs and metrics.
 
 **To access ArgoCD:**
 
